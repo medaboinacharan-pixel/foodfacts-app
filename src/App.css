@@ -5,33 +5,339 @@ body {
 }
 
 .app {
-  text-align: center;
+  min-height: 100vh;
+}
+
+/* ===== SEARCH PAGE ===== */
+.home-page {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
 }
 
 form {
-  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 input {
-  padding: 10px;
-  width: 250px;
+  padding: 12px;
+  width: 300px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4CAF50;
 }
 
 button {
-  padding: 10px;
-  margin-left: 10px;
+  padding: 12px 24px;
+  margin-left: 0;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.btn-details {
+  background-color: #4CAF50;
+}
+
+.btn-details:hover {
+  background-color: #45a049;
+}
+
+.btn-remove {
+  background-color: #f44336;
+}
+
+.btn-remove:hover {
+  background-color: #da190b;
+}
+
+.btn-save {
+  background-color: #4CAF50;
+}
+
+.btn-save:hover {
+  background-color: #45a049;
+}
+
+.btn-saved {
+  background-color: #2196F3;
+}
+
+.btn-saved:hover {
+  background-color: #0b7dda;
+}
+
+.validation-error {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 2px solid #f44336;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* ===== FOOD LIST & CARDS ===== */
+div > div:has(.food-card) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .food-card {
   background: white;
-  margin: 20px auto;
-  padding: 20px;
-  width: 300px;
+  padding: 15px;
   border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.food-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.food-card h2 {
+  margin: 10px 0 15px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.food-card p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
 }
 
 .food-card img {
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+/* ===== DETAIL PAGE ===== */
+.detail-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.detail-page > button {
+  margin-bottom: 20px;
+  background-color: #666;
+}
+
+.detail-page > button:hover {
+  background-color: #555;
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-info h1 {
+  margin: 0 0 20px 0;
+  font-size: 28px;
+  color: #333;
+}
+
+.product-info p {
+  margin: 15px 0;
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.button-group button {
+  flex: 1;
+  min-width: 150px;
+}
+
+.nutrition-section {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nutrition-section h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.nutrient {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #4CAF50;
+  text-align: center;
+}
+
+.nutrient strong {
+  display: block;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.nutrient p {
+  margin: 0;
+  color: #4CAF50;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .nutrition-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  input {
+    width: 200px;
+  }
+}
+
+/* ===== SAVED PAGE ===== */
+.saved-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.saved-page h1 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.empty-state {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #666;
+  margin: 10px 0;
+}
+
+.saved-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.saved-item {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.saved-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.saved-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.saved-item h3 {
+  margin: 15px 0 10px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.saved-item p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
 }
