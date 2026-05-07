@@ -1,75 +1,48 @@
-import { useState } from "react";
-import SearchBar from "./components/SearchBar";
-import FoodList from "./components/FoodList";
+import { useState, useReducer } from "react";
+import { Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import HomePage from "./pages/HomePage";
+import DetailPage from "./pages/DetailPage";
+import SavedPage from "./pages/SavedPage";
 import "./App.css";
 
-function App() {
-
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searched, setSearched] = useState(false);
-
-  const handleSearch = async (query) => {
-
-    setLoading(true);
-    setSearched(true);
-
-    try {
-
-      const encodedQuery =
-        encodeURIComponent(query);
-
-      const response = await fetch(
-        `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodedQuery}&search_simple=1&action=process&json=1`
+function savedReducer(state, action) {
+  switch (action.type) {
+    case "ADD":
+      const alreadyExists = state.some(
+        (product) => product.code === action.product.code
       );
+      if (alreadyExists) {
+        return state;
+      }
+      return [...state, action.product];
 
-      const data = await response.json();
+    case "REMOVE":
+      return state.filter((product) => product.code !== action.code);
 
-      const filteredProducts =
-        data.products.filter(
-          (p) =>
-            p.product_name &&
-            p.product_name.trim() !== ""
-        );
+    default:
+      return state;
+  }
+}
 
-      setResults(filteredProducts);
-
-    } catch (error) {
-
-      console.log(error);
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  };
+function App() {
+  const [saved, dispatch] = useReducer(savedReducer, []);
 
   return (
     <div className="app">
+      <NavBar savedCount={saved.length} />
 
-      <h1>FoodFacts</h1>
-
-      <SearchBar onSearch={handleSearch} />
-
-      {!searched && !loading && (
-        <p>Search for food items.</p>
-      )}
-
-      {loading && (
-        <p>Loading...</p>
-      )}
-
-      {searched &&
-        !loading &&
-        results.length === 0 && (
-          <p>No results found.</p>
-      )}
-
-      {results.length > 0 && (
-        <FoodList products={results} />
-      )}
-
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/product/:barcode"
+          element={<DetailPage saved={saved} dispatch={dispatch} />}
+        />
+        <Route
+          path="/saved"
+          element={<SavedPage saved={saved} dispatch={dispatch} />}
+        />
+      </Routes>
     </div>
   );
 }
