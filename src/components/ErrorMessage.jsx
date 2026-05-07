@@ -1,10 +1,13 @@
+import React from 'react';
+import { Alert } from '@mui/material';
+
 function ErrorMessage({ message }) {
   if (!message) return null;
 
   return (
-    <div className="error-message">
-      <p>{message}</p>
-    </div>
+    <Alert severity="error" sx={{ mb: 2 }}>
+      {message}
+    </Alert>
   );
 }
 

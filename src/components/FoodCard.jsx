@@ -1,50 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
 
-function FoodCard({ product }) {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/product/${product.code}`);
-  };
-
+function FoodCard({ product, onSave }) {
   return (
-    <div className="food-card" onClick={handleClick} style={{ cursor: "pointer" }}>
-
-      <h2>{product.product_name}</h2>
-
-      <p>
-        Brand: {product.brands || "Unknown"}
-      </p>
-
-      <img
-        src={
-          product.image_small_url ||
-          "https://via.placeholder.com/120"
-        }
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        height="140"
+        image={product.image_url || '/placeholder.jpg'}
         alt={product.product_name}
       />
-
-      <p>
-        Calories:
-        {product.nutriments?.["energy-kcal_100g"] || "N/A"}
-      </p>
-
-      <p>
-        Protein:
-        {product.nutriments?.proteins_100g || "N/A"} g
-      </p>
-
-      <p>
-        Carbs:
-        {product.nutriments?.carbohydrates_100g || "N/A"} g
-      </p>
-
-      <p>
-        Fat:
-        {product.nutriments?.fat_100g || "N/A"} g
-      </p>
-
-    </div>
+      <CardContent>
+        <Typography variant="h6">{product.product_name}</Typography>
+        <Button variant="contained" onClick={() => onSave(product)}>Save</Button>
+      </CardContent>
+    </Card>
   );
 }
 

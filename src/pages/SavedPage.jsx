@@ -1,60 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItem } from '../store/savedSlice';
+import { Grid, Card, CardContent, Typography, Button } from '@mui/material';
 
-function SavedPage({ saved, dispatch }) {
-  const navigate = useNavigate();
-
-  const handleRemove = (code) => {
-    dispatch({ type: "REMOVE", code });
-  };
-
-  const handleViewDetails = (code) => {
-    navigate(`/product/${code}`);
-  };
+function SavedPage() {
+  const savedItems = useSelector((state) => state.saved);
+  const dispatch = useDispatch();
 
   return (
-    <div className="saved-page">
-      <h1>Saved Items</h1>
-
-      {saved.length === 0 ? (
-        <div className="empty-state">
-          <p>You haven't saved any products yet.</p>
-          <p>Click the "Save Product" button on any product detail page to add it here.</p>
-        </div>
-      ) : (
-        <div className="saved-items-grid">
-          {saved.map((product) => (
-            <div key={product.code} className="saved-item">
-              <img
-                src={product.image_small_url || "https://via.placeholder.com/120"}
-                alt={product.product_name}
-              />
-
-              <h3>{product.product_name}</h3>
-
-              <p>
-                <strong>Brand:</strong> {product.brands || "Unknown"}
-              </p>
-
-              <div className="button-group">
-                <button
-                  onClick={() => handleViewDetails(product.code)}
-                  className="btn-details"
-                >
-                  View Details
-                </button>
-
-                <button
-                  onClick={() => handleRemove(product.code)}
-                  className="btn-remove"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <Grid container spacing={2} sx={{ p: 2 }}>
+      {savedItems.map(item => (
+        <Grid item xs={12} sm={6} md={4} key={item.barcode}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">{item.product_name}</Typography>
+              <Button variant="outlined" onClick={() => dispatch(removeItem(item.barcode))}>
+                Remove
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
   );
 }
 
